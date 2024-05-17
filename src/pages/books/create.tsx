@@ -87,6 +87,17 @@ export const BlogPostCreate = () => {
                     label={'Translators'}
                     name="translators"
                 />
+                <TextField
+                    {...register('image')}
+                    error={!!(errors as any)?.image}
+                    helperText={(errors as any)?.image?.message}
+                    margin="normal"
+                    fullWidth
+                    InputLabelProps={{shrink: true}}
+                    multiline
+                    label={'Image URL'}
+                    name="image"
+                />
                 <Controller
                     control={control}
                     name={'category'}

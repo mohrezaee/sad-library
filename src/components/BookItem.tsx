@@ -9,7 +9,11 @@ type BookItemProps = {
 export const BookItem: React.FC<BookItemProps> = ({book}) => {
     return (
         <Card>
-            <CardMedia component="img" image={book.image} alt={book.name} />
+            <CardMedia
+                component="img"
+                image={book.image ?? 'https://edit.org/images/cat/book-covers-big-2019101610.jpg'}
+                alt={book.name}
+            />
             <CardContent>
                 <Typography variant="h5" component="div">
                     {book.name}
