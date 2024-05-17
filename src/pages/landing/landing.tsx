@@ -20,7 +20,7 @@ export const LandingPage: React.FC = () => {
                 book.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
                 (selectedCategory === '' || book.category === selectedCategory),
         ) ?? []
-    const categories = categoriesData?.data?.map((item) => item.name)
+    const categories = categoriesData?.data
 
     return (
         <Container>

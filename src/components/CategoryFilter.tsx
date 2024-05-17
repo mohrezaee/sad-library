@@ -1,8 +1,9 @@
 import React from 'react'
 import {FormControl, InputLabel, Select, MenuItem, Box} from '@mui/material'
+import { CategoryType } from '../dataproviders/CategoryDataprovider'
 
 type CategoryFilterProps = {
-    categories: string[]
+    categories: CategoryType[]
     selectedCategory: string
     onCategoryChange: (category: string) => void
 }
@@ -22,13 +23,15 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 <InputLabel>Category</InputLabel>
                 <Select value={selectedCategory} onChange={handleCategoryChange} label="Category">
                     {categories.map((category) => (
-                        <MenuItem key={category} value={category}>
-                            {category}
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.name}
                         </MenuItem>
                     ))}
+                    <MenuItem key={'clearable'} value={''}>
+                        No category
+                    </MenuItem>
                 </Select>
             </FormControl>
         </Box>
     )
 }
-
