@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { useOne, useShow } from "@refinedev/core";
+import { useMany, useOne, useShow } from "@refinedev/core";
 import {
   DateField,
   MarkdownField,
@@ -15,13 +15,14 @@ export const BlogPostShow = () => {
 
   const record = data?.data;
 
-  const { data: categoryData, isLoading: categoryIsLoading } = useOne({
+  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
     resource: "categories",
-    id: record?.category || "",
+    ids: record?.category || [],
     queryOptions: {
       enabled: !!record,
     },
   });
+  console.log(record?.category)
 
   return (
     <Show isLoading={isLoading}>
@@ -44,7 +45,7 @@ export const BlogPostShow = () => {
         <Typography variant="body1" fontWeight="bold">
           {"Category"}
         </Typography>
-        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.name}</>}
+        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.map(item => item.name).join(', ')}</>}
         <Typography variant="body1" fontWeight="bold">
           {"CreatedAt"}
         </Typography>

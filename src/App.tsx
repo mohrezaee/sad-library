@@ -105,28 +105,28 @@ function App() {
                             <Routes>
                                 <Route
                                     element={
-                                        <Authenticated
-                                            key="authenticated-inner"
-                                            fallback={<CatchAllNavigate to="/login" />}
+                                        // <Authenticated
+                                        //     key="authenticated-inner"
+                                        //     fallback={<CatchAllNavigate to="/login" />}
+                                        // >
+                                        <ThemedLayoutV2
+                                            Header={() => <Header sticky />}
+                                            Title={({collapsed}) => (
+                                                <ThemedTitleV2
+                                                    collapsed={collapsed}
+                                                    text="SAD Library"
+                                                    icon={<AppIcon />}
+                                                />
+                                            )}
                                         >
-                                            <ThemedLayoutV2
-                                                Header={() => <Header sticky />}
-                                                Title={({collapsed}) => (
-                                                    <ThemedTitleV2
-                                                        collapsed={collapsed}
-                                                        text="SAD Library"
-                                                        icon={<AppIcon />}
-                                                    />
-                                                )}
-                                            >
-                                                <Outlet />
-                                            </ThemedLayoutV2>
-                                        </Authenticated>
+                                            <Outlet />
+                                        </ThemedLayoutV2>
+                                        // </Authenticated>
                                     }
                                 >
                                     <Route
                                         index
-                                        element={<NavigateToResource resource="blog_posts" />}
+                                        element={<NavigateToResource resource="landing" />}
                                     />
                                     <Route path="/books">
                                         <Route index element={<BlogPostList />} />

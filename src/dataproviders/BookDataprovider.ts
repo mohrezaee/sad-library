@@ -20,7 +20,7 @@ export type BookType = {
     content: string
     price: number
     shabak: string
-    category: string
+    category: string[]
     image: string
     writers: string[]
     translators: string[]
@@ -35,9 +35,7 @@ export class BookDataprovider implements DataProvider {
     private static resource = 'books'
     constructor() {
         try {
-            BookDataprovider.books = Utils.getFromLocalStorate(
-                BookDataprovider.resource,
-            )
+            BookDataprovider.books = Utils.getFromLocalStorate(BookDataprovider.resource)
         } catch (error) {
             BookDataprovider.books = JSON.parse(JSON.stringify(defaultBooks))
         }
@@ -72,6 +70,7 @@ export class BookDataprovider implements DataProvider {
             translators: ((params.variables as BookType).translators as unknown as string).split(
                 ', ',
             ),
+            category: (params.variables as any).category.map((item) => item.id),
         }
         BookDataprovider.books = [
             ...BookDataprovider.books,
@@ -90,7 +89,11 @@ export class BookDataprovider implements DataProvider {
             throw new Error('book not found')
         }
         for (const key of Object.keys(params.variables as BookType)) {
-            book[key] = (params.variables as any)[key]
+            if (key === 'category') {
+                book[key] = (params.variables as any).category.map((item) => item.id)
+            } else {
+                book[key] = (params.variables as any)[key]
+            }
         }
         Utils.saveToLocalStorate(BookDataprovider.resource, BookDataprovider.books)
         return {data: book as TData}

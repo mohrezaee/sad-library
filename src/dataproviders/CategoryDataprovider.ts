@@ -44,11 +44,11 @@ export class CategoryDataprovider implements DataProvider {
 
     async getOne<TData>(params: GetOneParams): Promise<GetOneResponse<TData>> {
         CategoryDataprovider.categories = Utils.getFromLocalStorate(CategoryDataprovider.resource)
-        const book = CategoryDataprovider.categories.find((item) => item.id === params.id)
-        if (!book) {
-            throw new Error('book not found')
+        const category = CategoryDataprovider.categories.find((item) => item.id === params.id)
+        if (!category) {
+            throw new Error('category not found')
         }
-        return {data: book as TData}
+        return {data: category as TData}
     }
     async create<TData, TVariables>(
         params: CreateParams<TVariables>,
@@ -70,23 +70,23 @@ export class CategoryDataprovider implements DataProvider {
     async update<TData, TVariables>(
         params: UpdateParams<TVariables>,
     ): Promise<UpdateResponse<TData>> {
-        const book = CategoryDataprovider.categories.find((item) => item.id === params.id) as any
-        if (!book) {
-            throw new Error('book not found')
+        const category = CategoryDataprovider.categories.find((item) => item.id === params.id) as any
+        if (!category) {
+            throw new Error('category not found')
         }
         for (const key of Object.keys(params.variables as CategoryType)) {
-            book[key] = (params.variables as any)[key]
+            category[key] = (params.variables as any)[key]
         }
         Utils.saveToLocalStorate(CategoryDataprovider.resource, CategoryDataprovider.categories)
-        return {data: book as TData}
+        return {data: category as TData}
     }
 
     async deleteOne<TData, TVariables>(
         params: DeleteOneParams<TVariables>,
     ): Promise<DeleteOneResponse<TData>> {
-        const book = CategoryDataprovider.categories.find((item) => item.id === params.id) as any
-        if (!book) {
-            throw new Error('book not found')
+        const category = CategoryDataprovider.categories.find((item) => item.id === params.id) as any
+        if (!category) {
+            throw new Error('category not found')
         }
         CategoryDataprovider.categories = CategoryDataprovider.categories.filter(
             (item) => item.id !== params.id,

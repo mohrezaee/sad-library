@@ -6,14 +6,15 @@ import {Controller} from 'react-hook-form'
 export const BlogPostCreate = () => {
     const {
         saveButtonProps,
-        refineCore: {formLoading},
+        refineCore: {formLoading, onFinish},
         register,
         control,
         formState: {errors},
-    } = useForm({})
+    } = useForm({refineCoreProps: {}, })
 
     const {autocompleteProps: categoryAutocompleteProps} = useAutocomplete({
         resource: 'categories',
+        defaultValue: [],
     })
 
     return (
@@ -56,12 +57,11 @@ export const BlogPostCreate = () => {
                     helperText={(errors as any)?.price?.message}
                     margin="normal"
                     fullWidth
-					type='number'
+                    type="number"
                     InputLabelProps={{shrink: true}}
                     label={'Price'}
                     name="price"
                 />
-                
 
                 <TextField
                     {...register('writers', {
@@ -91,48 +91,50 @@ export const BlogPostCreate = () => {
                     control={control}
                     name={'category'}
                     rules={{required: 'This field is required'}}
-                    // eslint-disable-next-line
-                    defaultValue={null as any}
-                    render={({field}) => (
-                        <Autocomplete
-                            {...categoryAutocompleteProps}
-                            {...field}
-                            onChange={(_, value) => {
-                                field.onChange(value.id)
-                            }}
-                            getOptionLabel={(item) => {
-                                return (
-                                    categoryAutocompleteProps?.options?.find((p) => {
-                                        const itemId =
-                                            typeof item === 'object'
-                                                ? item?.id?.toString()
-                                                : item?.toString()
-                                        const pId = p?.id?.toString()
-                                        return itemId === pId
-                                    })?.name ?? ''
-                                )
-                            }}
-                            isOptionEqualToValue={(option, value) => {
-                                const optionId = option?.id?.toString()
-                                const valueId =
-                                    typeof value === 'object'
-                                        ? value?.id?.toString()
-                                        : value?.toString()
-                                return value === undefined || optionId === valueId
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={'Category'}
-                                    margin="normal"
-                                    variant="outlined"
-                                    error={!!(errors as any)?.category?.id}
-                                    helperText={(errors as any)?.category?.id?.message}
-                                    required
-                                />
-                            )}
-                        />
-                    )}
+                    defaultValue={[] as any}
+                    render={({field}) => {
+                        return (
+                            <Autocomplete
+                                multiple
+                                {...categoryAutocompleteProps}
+                                {...field}
+                                onChange={(e, value) => {
+                                    field.onChange(value)
+                                }} 
+                                getOptionLabel={(item) => {
+                                    return (
+                                        categoryAutocompleteProps?.options?.find((p) => {
+                                            const itemId =
+                                                typeof item === 'object'
+                                                    ? item?.id?.toString()
+                                                    : item?.toString()
+                                            const pId = p?.id?.toString()
+                                            return itemId === pId
+                                        })?.name ?? ''
+                                    )
+                                }}
+                                isOptionEqualToValue={(option, value) => {
+                                    const optionId = option?.id?.toString()
+                                    const valueId =
+                                        typeof value === 'object'
+                                            ? value?.id?.toString()
+                                            : value?.toString()
+                                    return value === undefined || optionId === valueId
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label={'Category'}
+                                        margin="normal"
+                                        variant="outlined"
+                                        error={!!(errors as any)?.category?.id}
+                                        helperText={(errors as any)?.category?.id?.message}
+                                        required
+                                    />
+                                )}
+                            />
+                        )
+                    }}
                 />
             </Box>
         </Create>

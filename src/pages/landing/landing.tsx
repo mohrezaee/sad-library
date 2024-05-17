@@ -18,7 +18,7 @@ export const LandingPage: React.FC = () => {
         booksData?.data?.filter(
             (book) =>
                 book.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                (selectedCategory === '' || book.category === selectedCategory),
+                (selectedCategory === '' || book.category.includes(selectedCategory)),
         ) ?? []
     const categories = categoriesData?.data
 

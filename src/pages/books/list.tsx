@@ -1,14 +1,6 @@
 import {DataGrid, GridColDef} from '@mui/x-data-grid'
-import {useMany} from '@refinedev/core'
-import {
-    DateField,
-    DeleteButton,
-    EditButton,
-    List,
-    MarkdownField,
-    ShowButton,
-    useDataGrid,
-} from '@refinedev/mui'
+import {useList} from '@refinedev/core'
+import {DateField, DeleteButton, EditButton, List, ShowButton, useDataGrid} from '@refinedev/mui'
 import React from 'react'
 
 export const BlogPostList = () => {
@@ -16,9 +8,8 @@ export const BlogPostList = () => {
         syncWithLocation: true,
     })
 
-    const {data: categoryData, isLoading: categoryIsLoading} = useMany({
+    const {data: categoryData, isLoading: categoryIsLoading} = useList({
         resource: 'categories',
-        ids: dataGridProps?.rows?.map((item: any) => item?.category).filter(Boolean) ?? [],
         queryOptions: {
             enabled: !!dataGridProps?.rows,
         },
@@ -39,16 +30,6 @@ export const BlogPostList = () => {
                 minWidth: 200,
             },
             {
-                field: 'content',
-                flex: 1,
-                headerName: 'content',
-                minWidth: 250,
-                renderCell: function render({value}) {
-                    if (!value) return '-'
-                    return <MarkdownField value={value?.slice(0, 80) + '...' || ''} />
-                },
-            },
-            {
                 field: 'category',
                 flex: 1,
                 headerName: 'Category',
@@ -60,7 +41,10 @@ export const BlogPostList = () => {
                     return categoryIsLoading ? (
                         <>Loading...</>
                     ) : (
-                        categoryData?.data?.find((item) => item.id === value)?.name
+                        categoryData?.data
+                            ?.filter((item) => value.includes(item.id))
+                            .map((i) => i.name)
+                            .join(', ')
                     )
                 },
             },
