@@ -10,7 +10,7 @@ import {CategoryType} from '../../dataproviders/CategoryDataprovider'
 
 export const LandingPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedCategory, setSelectedCategory] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState<CategoryType[]>([])
     const {data: booksData} = useList<BookType>({resource: 'books'})
     const {data: categoriesData} = useList<CategoryType>({resource: 'categories'})
 
@@ -18,8 +18,16 @@ export const LandingPage: React.FC = () => {
         booksData?.data?.filter(
             (book) =>
                 book.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                (selectedCategory === '' || book.category.includes(selectedCategory)),
+                (selectedCategory.length === 0 || containCategory(book)),
         ) ?? []
+    function containCategory(book: BookType) {
+        for (const cat of book.category) {
+            if (selectedCategory.map(item => item.id).includes(cat)) {
+                return true
+            }
+        }
+        return false
+    }
     const categories = categoriesData?.data
 
     return (

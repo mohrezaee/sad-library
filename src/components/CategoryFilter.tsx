@@ -1,11 +1,11 @@
 import React from 'react'
-import {FormControl, InputLabel, Select, MenuItem, Box} from '@mui/material'
-import { CategoryType } from '../dataproviders/CategoryDataprovider'
+import {FormControl, Box, Autocomplete, TextField} from '@mui/material'
+import {CategoryType} from '../dataproviders/CategoryDataprovider'
 
 type CategoryFilterProps = {
     categories: CategoryType[]
-    selectedCategory: string
-    onCategoryChange: (category: string) => void
+    selectedCategory: CategoryType[]
+    onCategoryChange: (category: CategoryType[]) => void
 }
 
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({
@@ -13,24 +13,21 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     selectedCategory,
     onCategoryChange,
 }) => {
-    const handleCategoryChange = (event: any) => {
-        onCategoryChange(event.target.value as string)
+    const handleCategoryChange = (value: CategoryType[]) => {
+        onCategoryChange(value)
     }
 
     return (
         <Box my={2}>
             <FormControl fullWidth variant="outlined">
-                <InputLabel>Category</InputLabel>
-                <Select value={selectedCategory} onChange={handleCategoryChange} label="Category">
-                    {categories.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>
-                            {category.name}
-                        </MenuItem>
-                    ))}
-                    <MenuItem key={'clearable'} value={''}>
-                        No category
-                    </MenuItem>
-                </Select>
+                <Autocomplete
+                    multiple={true}
+                    value={selectedCategory as any}
+                    onChange={(e, value) => handleCategoryChange(value)}
+                    options={categories}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => <TextField {...params} label="Category" />}
+                />
             </FormControl>
         </Box>
     )
