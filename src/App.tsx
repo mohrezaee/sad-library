@@ -32,6 +32,7 @@ import {BookDataprovider} from './dataproviders/BookDataprovider'
 import {CategoryDataprovider} from './dataproviders/CategoryDataprovider'
 import {UserDataprovider} from './dataproviders/UserDataprovider'
 import {UserList, UserCreate, UserEdit, UserShow} from './pages/users'
+import {LandingPage} from './pages/landing/landing'
 
 function App() {
     return (
@@ -61,6 +62,14 @@ function App() {
                                     meta: {
                                         canDelete: true,
                                         dataProviderName: 'books',
+                                    },
+                                },
+                                {
+                                    name: 'landing',
+                                    list: '/landing',
+                                    meta: {
+                                        dataProviderName: 'landing',
+                                        hide: true,
                                     },
                                 },
                                 {
@@ -153,6 +162,7 @@ function App() {
                                     <Route path="/register" element={<Register />} />
                                     <Route path="/forgot-password" element={<ForgotPassword />} />
                                 </Route>
+                                <Route path="/landing" element={<LandingPage />} />
                             </Routes>
 
                             <RefineKbar />

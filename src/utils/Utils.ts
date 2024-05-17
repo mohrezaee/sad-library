@@ -3,7 +3,7 @@ export class Utils {
         localStorage.setItem(key, JSON.stringify(data))
     }
     static getFromLocalStorate(key: string): any {
-        const data = JSON.parse(localStorage.getItem(key) || '[]')
+        const data = JSON.parse(localStorage.getItem(key) || '')
         return data
     }
 }

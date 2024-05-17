@@ -26,6 +26,7 @@ export type BookType = {
     translators: string[]
     publisher: string
     createdAt: Date
+    rating: number
 }
 
 export class BookDataprovider implements DataProvider {
