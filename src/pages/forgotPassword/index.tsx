@@ -8,7 +8,7 @@ export const ForgotPassword = () => {
       title={
         <ThemedTitleV2
           collapsed={false}
-          text="Refine Project"
+          text="SAD Library"
           icon={<AppIcon />}
         />
       }

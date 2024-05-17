@@ -17,7 +17,7 @@ export const BlogPostShow = () => {
 
   const { data: categoryData, isLoading: categoryIsLoading } = useOne({
     resource: "categories",
-    id: record?.category?.id || "",
+    id: record?.category || "",
     queryOptions: {
       enabled: !!record,
     },
@@ -32,9 +32,9 @@ export const BlogPostShow = () => {
         <NumberField value={record?.id ?? ""} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Title"}
+          {"Names"}
         </Typography>
-        <TextField value={record?.title} />
+        <TextField value={record?.name} />
 
         <Typography variant="body1" fontWeight="bold">
           {"Content"}
@@ -44,11 +44,7 @@ export const BlogPostShow = () => {
         <Typography variant="body1" fontWeight="bold">
           {"Category"}
         </Typography>
-        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.title}</>}
-        <Typography variant="body1" fontWeight="bold">
-          {"Status"}
-        </Typography>
-        <TextField value={record?.status} />
+        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.name}</>}
         <Typography variant="body1" fontWeight="bold">
           {"CreatedAt"}
         </Typography>
