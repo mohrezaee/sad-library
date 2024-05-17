@@ -5,14 +5,8 @@ import {BookType} from '../../dataproviders/BookDataprovider'
 import {BookList} from '../../components/BookList'
 import {CategoryFilter} from '../../components/CategoryFilter'
 import {SearchBar} from '../../components/SearchBar'
-import {useList, useMany} from '@refinedev/core'
+import {useList} from '@refinedev/core'
 import {CategoryType} from '../../dataproviders/CategoryDataprovider'
-
-const booksData: BookType[] = [
-    // Sample data
-]
-
-const categories = ['Fiction', 'Non-fiction', 'Science', 'History']
 
 export const LandingPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('')
