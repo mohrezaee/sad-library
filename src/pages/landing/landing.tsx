@@ -1,10 +1,10 @@
-// pages/LandingPage.tsx
 import React, {useState} from 'react'
-import {Container} from '@mui/material'
+import {Box, Container} from '@mui/material'
 import {BookType} from '../../dataproviders/BookDataprovider'
 import {BookList} from '../../components/BookList'
 import {CategoryFilter} from '../../components/CategoryFilter'
 import {SearchBar} from '../../components/SearchBar'
+import {Appbar} from '../../components/Appbar'
 import {useList} from '@refinedev/core'
 import {CategoryType} from '../../dataproviders/CategoryDataprovider'
 
@@ -22,7 +22,7 @@ export const LandingPage: React.FC = () => {
         ) ?? []
     function containCategory(book: BookType) {
         for (const cat of book.category) {
-            if (selectedCategory.map(item => item.id).includes(cat)) {
+            if (selectedCategory.map((item) => item.id).includes(cat)) {
                 return true
             }
         }
@@ -31,14 +31,17 @@ export const LandingPage: React.FC = () => {
     const categories = categoriesData?.data
 
     return (
-        <Container>
-            <SearchBar onSearch={setSearchTerm} />
-            <CategoryFilter
-                categories={categories ?? []}
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-            />
-            <BookList books={filteredBooks} />
-        </Container>
+        <Box>
+            <Appbar />
+            <Container>
+                <SearchBar onSearch={setSearchTerm} />
+                <CategoryFilter
+                    categories={categories ?? []}
+                    selectedCategory={selectedCategory}
+                    onCategoryChange={setSelectedCategory}
+                />
+                <BookList books={filteredBooks} />
+            </Container>
+        </Box>
     )
 }

@@ -1,12 +1,48 @@
 import React from 'react'
-import {Card, CardMedia, CardContent, Typography, Box, Rating} from '@mui/material'
+import {
+    Card,
+    CardMedia,
+    CardContent,
+    Typography,
+    Box,
+    Rating,
+    CardActions,
+    Button,
+} from '@mui/material'
 import {BookType} from '../dataproviders/BookDataprovider'
+import AddIcon from '@mui/icons-material/Add'
+import {useDispatch, useSelector} from 'react-redux'
+import {addToBasket} from '../redux/BasketSlice'
+import {useNotification} from '@refinedev/core'
+import {RootState} from '../redux/store'
 
 type BookItemProps = {
     book: BookType
 }
 
 export const BookItem: React.FC<BookItemProps> = ({book}) => {
+    const dispatch = useDispatch()
+    const basket = useSelector((state: RootState) => state.basket)
+    const {open} = useNotification()
+    function add() {
+        if (open) {
+            for (const bookItem of basket) {
+                if (bookItem.id == book.id) {
+                    open({
+                        message: 'this item already exists',
+                        type: 'error',
+                    })
+                    return
+                }
+            }
+            dispatch(addToBasket(book))
+            open({
+                message: `add ${book.name} to basket`,
+                type: 'success',
+            })
+        }
+    }
+
     return (
         <Card>
             <CardMedia
@@ -25,6 +61,9 @@ export const BookItem: React.FC<BookItemProps> = ({book}) => {
                     <Rating value={book.rating} readOnly />
                 </Box>
             </CardContent>
+            <CardActions onClick={add}>
+                <Button startIcon={<AddIcon />}>ADD</Button>
+            </CardActions>
         </Card>
     )
 }
