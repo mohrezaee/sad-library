@@ -1,5 +1,5 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import {AppBar, Toolbar, IconButton, Typography, Button, Stack} from '@mui/material'
+import {AppBar, Toolbar, IconButton, Typography, Button, Stack, Badge} from '@mui/material'
 import React, {useState} from 'react'
 import {BasketDialog} from './BasketDialog'
 import {useSelector} from 'react-redux'
@@ -12,6 +12,7 @@ export function Appbar() {
     const {mutate: logout} = useLogout()
     const navigate = useNavigate()
     const user = useSelector((state: RootState) => state.user)
+    const basket = useSelector((state: RootState) => state.basket)
     return (
         <AppBar position="sticky">
             <BasketDialog open={cartOpen} onClose={() => setCartOpen(false)} />
@@ -24,7 +25,9 @@ export function Appbar() {
                     aria-label="menu"
                     sx={{mr: 2}}
                 >
-                    <ShoppingCartIcon />
+                    <Badge badgeContent={basket.length} color='warning'>
+                        <ShoppingCartIcon />
+                    </Badge>
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     Sad Library
