@@ -1,12 +1,19 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import {AppBar, Toolbar, IconButton, Typography, Button} from '@mui/material'
+import {AppBar, Toolbar, IconButton, Typography, Button, Stack} from '@mui/material'
 import React, {useState} from 'react'
 import {BasketDialog} from './BasketDialog'
+import {useSelector} from 'react-redux'
+import {RootState} from '../redux/store'
+import {useNavigate} from 'react-router-dom'
+import {useLogout} from '@refinedev/core'
 
 export function Appbar() {
     const [cartOpen, setCartOpen] = useState(false)
+    const {mutate: logout} = useLogout()
+    const navigate = useNavigate()
+    const user = useSelector((state: RootState) => state.user)
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <BasketDialog open={cartOpen} onClose={() => setCartOpen(false)} />
             <Toolbar>
                 <IconButton
@@ -22,7 +29,24 @@ export function Appbar() {
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     Sad Library
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {user.login ? (
+                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                        <Typography>{user.name}</Typography>
+                        <Button
+                            variant="outlined"
+                            onClick={() => {
+                                logout()
+                            }}
+                            color="inherit"
+                        >
+                            Logout
+                        </Button>
+                    </Stack>
+                ) : (
+                    <Button variant="outlined" onClick={() => navigate('/login')} color="inherit">
+                        Login
+                    </Button>
+                )}
             </Toolbar>
         </AppBar>
     )

@@ -1,13 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit'
+import { RootState } from './store'
 
-const initialState = {
+type UserType = {
+    name: string,
+    phone: string,
+    id: string,
+    login: boolean,
+}
+const initialState: UserType = {
     name: '',
     phone: '',
     id: '',
     login: false,
-    token: undefined
 }
-function getInitialState() {
+function getInitialState(): UserType {
     try {
         const user = JSON.parse(localStorage.getItem('user') || "{}")
         if (user) return user
@@ -35,7 +41,7 @@ const userSlice = createSlice({
             saveStateToLocalStorage(state)
             return state
         },
-        logout(state, action) {
+        logout(state) {
             state = initialState
             emptyStorages()
             return state
@@ -44,5 +50,6 @@ const userSlice = createSlice({
 })
 
 export const {setUser, logout} = userSlice.actions
+export const util = (state: RootState) => state.util
 
 export default userSlice.reducer

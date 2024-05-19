@@ -49,6 +49,7 @@ export const BookItem: React.FC<BookItemProps> = ({book}) => {
                 component="img"
                 image={book.image ?? 'https://edit.org/images/cat/book-covers-big-2019101610.jpg'}
                 alt={book.name}
+                height={'400px'}
             />
             <CardContent>
                 <Typography variant="h5" component="div">
