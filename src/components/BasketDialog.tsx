@@ -73,6 +73,7 @@ export function BasketDialog({open, onClose}: SimpleDialogProps) {
                     onClick={() => {
                         if (user.login) {
                             navigate('/buy')
+                            handleClose()
                         } else {
                             if (!notify) {
                                 return

@@ -36,6 +36,9 @@ import {Provider} from 'react-redux'
 import {store} from './redux/store'
 import {Book} from './pages/book/Book'
 import {AppShell} from './components/AppShell'
+import {Order} from './pages/order/Order'
+import {OrderList} from './pages/orders'
+import {OrderDataprovider} from './dataproviders/OrderDataprovider'
 
 function App() {
     return (
@@ -52,6 +55,7 @@ function App() {
                                     books: new BookDataprovider(),
                                     categories: new CategoryDataprovider(),
                                     users: new UserDataprovider(),
+                                    orders: new OrderDataprovider(),
                                 }}
                                 notificationProvider={notificationProvider}
                                 authProvider={authProvider}
@@ -96,6 +100,17 @@ function App() {
                                         meta: {
                                             canDelete: true,
                                             dataProviderName: 'users',
+                                        },
+                                    },
+                                    {
+                                        name: 'orders',
+                                        list: '/orders',
+                                        create: '/orders/create',
+                                        edit: '/orders/edit/:id',
+                                        show: '/orders/show/:id',
+                                        meta: {
+                                            canDelete: true,
+                                            dataProviderName: 'orders',
                                         },
                                     },
                                 ]}
@@ -150,6 +165,10 @@ function App() {
                                             <Route path="edit/:id" element={<UserEdit />} />
                                             <Route path="show/:id" element={<UserShow />} />
                                         </Route>
+                                        <Route path="/orders">
+                                            <Route index element={<OrderList />} />
+                                            <Route path="show/:id" element={<UserShow />} />
+                                        </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
                                     <Route
@@ -171,6 +190,7 @@ function App() {
                                     </Route>
                                     <Route element={<AppShell />}>
                                         <Route path="/landing" element={<LandingPage />} />
+                                        <Route path="/buy" element={<Order />} />
                                         <Route path="/book/:id" element={<Book />} />
                                     </Route>
                                 </Routes>

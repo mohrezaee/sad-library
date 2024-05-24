@@ -15,7 +15,7 @@ export const authProvider: AuthBindings = {
             )
 
             if (user) {
-                store.dispatch(setUser({login: true, name: user.username}))
+                store.dispatch(setUser({login: true, name: user.username, id: user.id}))
                 const redirect = user.username === 'admin' ? 'books' : ''
                 return {
                     success: true,
