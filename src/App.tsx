@@ -34,6 +34,8 @@ import {UserList, UserCreate, UserEdit, UserShow} from './pages/users'
 import {LandingPage} from './pages/landing/landing'
 import {Provider} from 'react-redux'
 import {store} from './redux/store'
+import {Book} from './pages/book/Book'
+import {AppShell} from './components/AppShell'
 
 function App() {
     return (
@@ -167,7 +169,10 @@ function App() {
                                             element={<ForgotPassword />}
                                         />
                                     </Route>
-                                    <Route path="/landing" element={<LandingPage />} />
+                                    <Route element={<AppShell />}>
+                                        <Route path="/landing" element={<LandingPage />} />
+                                        <Route path="/book/:id" element={<Book />} />
+                                    </Route>
                                 </Routes>
 
                                 <RefineKbar />

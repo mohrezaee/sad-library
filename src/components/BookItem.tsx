@@ -8,6 +8,7 @@ import {
     Rating,
     CardActions,
     Button,
+    CardActionArea,
 } from '@mui/material'
 import {BookType} from '../dataproviders/BookDataprovider'
 import AddIcon from '@mui/icons-material/Add'
@@ -15,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {addToBasket} from '../redux/BasketSlice'
 import {useNotification} from '@refinedev/core'
 import {RootState} from '../redux/store'
+import {useNavigate} from 'react-router-dom'
 
 type BookItemProps = {
     book: BookType
@@ -22,6 +24,7 @@ type BookItemProps = {
 
 export const BookItem: React.FC<BookItemProps> = ({book}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const basket = useSelector((state: RootState) => state.basket)
     const {open} = useNotification()
     function add() {
@@ -45,12 +48,16 @@ export const BookItem: React.FC<BookItemProps> = ({book}) => {
 
     return (
         <Card>
-            <CardMedia
-                component="img"
-                image={book.image ?? 'https://edit.org/images/cat/book-covers-big-2019101610.jpg'}
-                alt={book.name}
-                height={'400px'}
-            />
+            <CardActionArea onClick={() => navigate('/book/' + book.id)}>
+                <CardMedia
+                    component="img"
+                    image={
+                        book.image ?? 'https://edit.org/images/cat/book-covers-big-2019101610.jpg'
+                    }
+                    alt={book.name}
+                    height={'400px'}
+                />
+            </CardActionArea>
             <CardContent>
                 <Typography variant="h5" component="div">
                     {book.name}

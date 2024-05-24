@@ -32,7 +32,6 @@ export const LandingPage: React.FC = () => {
 
     return (
         <Box>
-            <Appbar />
             <Container>
                 <SearchBar onSearch={setSearchTerm} />
                 <CategoryFilter
