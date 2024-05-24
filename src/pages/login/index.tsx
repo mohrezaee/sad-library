@@ -85,6 +85,18 @@ export const Login = () => {
                                     mb: 0,
                                 }}
                             />
+                            <TextField
+                                margin="normal"
+                                fullWidth
+                                label={'SMS'}
+                                error={!!errors.password}
+                                type="password"
+                                placeholder="●●●●●●●●"
+                                autoComplete="current-password"
+                                sx={{
+                                    mb: 0,
+                                }}
+                            />
                             <Box
                                 component="div"
                                 sx={{
